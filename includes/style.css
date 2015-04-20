@@ -1,0 +1,195 @@
+#error, #printDiv{
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+#list, #selectGroup, #addWeekForm, p2 {
+    padding-left: 35px;
+    padding-top: 0px;
+}
+
+#submit, #printDetail {
+    padding-left: 20px;
+}
+
+#weekForm{
+    display: inline;
+}
+
+#scheduleDisplay, #editSchedule {
+    padding: 5px;
+}
+
+#dateTitle {
+    font-weight: bold;
+    font-size: 100%;
+    padding-bottom: 10px;
+    padding-top: 20px;
+}
+
+#selectTitle {
+    font-weight: bold;
+    font-size: 110%;
+    display: inline;
+    padding-left: 20px;
+}
+
+#radio li, #addWeekList li{
+    display: inline;
+    padding-left: 5px;
+}
+
+#week{
+    background-color: lightgrey;
+    display: inline;
+}
+
+select {
+    background-color: darkgrey ;
+}
+
+body{
+    font-family:  helvetica, sans-serif;
+    background-color: #9CC8DC;
+}
+
+#logo{
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+#menu li {
+    display: inline;
+    padding: 30px;
+    text-align: center;
+}
+
+#menu {
+    float: center;
+    text-align: center;
+}
+
+nav{
+    color: white;
+    border-bottom: 1px solid #1F1F1F;
+    float: center;
+}
+
+aside {
+    float: right;
+    padding-left: 15px;
+    width: 250px;
+    border-left: 1px solid #1F1F1F;
+}
+
+#center {
+    padding: 10px;
+    float: center;
+    width: 1100px;
+    padding-left: 30px;
+}
+
+#home {
+    width: 900px;
+    padding-left: 20px;
+}
+
+a:link {
+    color: #0404B4 ;
+    background-color:transparent;
+    text-decoration:none
+}
+
+a:visited {
+    color: #4D02B6;
+    background-color:transparent;
+    text-decoration:none
+}
+
+a:hover, a:active {
+    color: white;
+    background-color:transparent;
+    text-decoration:underline
+}
+
+#login li.link {
+    margin-top: 5px;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+    padding-top: 0px;
+}
+
+ul li {
+    padding: 5px;
+}
+
+#advisorFormTable{
+    border:0px;
+    background-color: transparent;
+}
+
+#advisorFormTable td{
+    background-color: transparent;
+    border: 0px;
+    text-align: right;
+    padding: 10px;
+}
+
+#tableEdit {
+    width: 900px;
+}
+
+#tableEdit td, th{
+    width: 140px;
+    height: 25px;
+}
+
+#tableDisplay{
+    width: 100%;
+}
+
+#tableDisplay td, th {
+    width: 140px;
+    height: 25px;
+}
+
+#tableDetail {
+    width: 700px;
+    padding-left: 5px;
+}
+
+#tableDetail tr, th, td{
+    height: 15px;
+}
+
+table {
+    border: 1px solid darkgrey;
+    border-collapse: collapse;
+    background-color: lightgrey;
+}
+
+td, th {
+    border: 1px solid darkgrey;
+    padding: 3px;
+    text-align: center;
+}
+
+#tdUnavailable {
+    background-color:#989898;
+    color: #989898;
+}
+
+#schedule {
+    list-style-type: none;
+    padding: 0px;
+}
+
+#schedule li{
+    display: inline;
+    padding-left: 20px;
+}
