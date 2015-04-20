@@ -1,6 +1,6 @@
 <?php
 include 'init.php';
-include 'includes/overallheader.php';
+//include 'includes/overallheader.php';
 ?>
 <h2>Add Advisor</h2>
 <?php
@@ -84,5 +84,5 @@ else{
 </form></div>
 <?php
 }
-include 'includes/overallfooter.php';
+//include 'includes/overallfooter.php';
 ?>
