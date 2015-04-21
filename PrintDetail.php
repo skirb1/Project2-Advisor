@@ -2,9 +2,8 @@
 include 'init.php';
 include 'includes/overallheader.php';
 
-if(logged_in() === true){
-  if(userType_from_userID($_SESSION['userID']) == "Advisor"){
-    $advisorID = advisorID_from_userID($_SESSION['userID']);
+if(array_key_exists('advisorID', $_SESSION)){
+  $advisorID = $_SESSION['advisorID'];
 
   if(array_key_exists('date', $_POST) === true && 
      array_key_exists('apptType', $_POST) === true){
@@ -155,8 +154,7 @@ if(logged_in() === true){
     }
     echo "<br><br><a href=\"SelectDetail.php\" >Back</a>";
   }
-} //end of if(user is Advisor)
-} //end if(logged in)
+} //end if(advisorID exists)
 else {
   echo "<br><div id=\"error\">You are not logged in.</div>";
 }

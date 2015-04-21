@@ -5,7 +5,7 @@ include 'includes/overallheader.php';
 <h2>Edit Calendar</h2>
 <p1>
 <?php
-if(logged_in() === true){
+if(array_key_exists('advisorID', $_SESSION)){
   echo "<div id=\"selectTitle\">Remove Week:</div>";
   echo "<br><br><p2>This will remove all data for the selected week</p2>";
   echo "<form name=\"removeWeek\" action=\"EditCalendar.php\" method=\"post\">";

@@ -8,7 +8,7 @@ include 'includes/overallheader.php';
 <?php include 'includes/selectWeek.php'; ?>
 </form>
 <?php
-if(logged_in() === true){
+if(array_key_exists('advisorID', $_SESSION)){
   if(count($_POST) > 1){
     echo "<form action=\"EditDay.php\" method=\"post\">";
     echo "<br><div id=\"selectTitle\">Select a day to edit:</div>";

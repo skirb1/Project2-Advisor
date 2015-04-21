@@ -5,8 +5,8 @@ include 'includes/overallheader.php';
 <h2>Edit Schedule</h2>
 <p1>
 <?php
-if(logged_in() === true){
-  $advisorID = advisorID_from_userID($_SESSION['userID']);
+if(array_key_exists('advisorID', $_SESSION)){
+  $advisorID = $_SESSION['advisorID'];
   if(count($_POST) > 1){
     $submit = array_pop($_POST);
     echo "<form action=\"UpdateSchedule.php\" method=\"post\"";

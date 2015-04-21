@@ -12,7 +12,7 @@
 <li><a href="index.php">Home</a></li>
     <?php
     if(array_key_exists('advisorID', $_SESSION)){
-        include 'includes/advisorMenu.php'; 
+        include 'includes/advisorMenu.php';
     }
     ?>
 </ul></nav>

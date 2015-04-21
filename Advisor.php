@@ -1,7 +1,19 @@
 <?php
 
-
-
+function name_from_advisorID($advisorID){
+    global $debug;
+    global $COMMON;
+    $name = "";
+    
+    $sql = "SELECT * FROM Advisors WHERE advisorID = '".$advisorID."'";
+    $record = $COMMON->executeQuery($sql, $_SERVER["Advisor.php"]);
+    if($record !== false){
+     $advisor = mysql_fetch_row($record);
+        $name = $advisor[1]." ".$advisor[2];
+    }
+    
+    return $name;
+}
 
 //Display list of advisors and contact info
 function advisor_list(){

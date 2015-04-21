@@ -1,8 +1,9 @@
+<aside>
 <div class="widget">
 <p>Logged in as 
 <?php
-   if(logged_in() === true){
-     echo username_from_userID($_SESSION['userID']);
+   if(array_key_exists('advisorID', $_SESSION)){
+     echo name_from_advisorID($_SESSION['advisorID']);
    }
 ?>
 </p>
@@ -10,3 +11,4 @@
   <input type="button" value="Log Out" onclick="parent.location='logout.php'">
   </div>
 </div>
+</aside>
