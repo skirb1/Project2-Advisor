@@ -33,39 +33,44 @@ function advisor_list(){
     echo "</div>";
 }
 
-function display_schedule($advisorID){
+function display_week($advisorID, $weekIndex){
   global $CALENDAR;
   global $apptTimes;
   global $debug;
   global $COMMON;
 
   if(count($_POST) > 1){
-    $week = $CALENDAR->weeks[(int)$_POST['week']];
+    $week = $CALENDAR->weeks[$weekIndex];
     for($i = 0; $i < 5; $i++){
-      $date = $week->dates[$i];
-      $sql = "SELECT * FROM " . $date ." WHERE advisorID = '$advisorID'";
-      $record = $COMMON->executeQuery($sql, $_SERVER["ScheduleDisplay.php"]);
-
-      echo "<div id=\"scheduleDisplay\">";
-      echo "<div id=\"dateTitle\">".date_to_string($date)."</div>";
-      echo "<table id=\"tableDisplay\"><tr>";
-      foreach($apptTimes as $time){
-	echo "<th>" . $time . "</th>";
-      }
-      echo "</tr>";
-      $schedule = mysql_fetch_row($record);
-      for($j = 2; $j < count($schedule); $j++) {
-	if($schedule[$j] == "false"){
-	  echo ("<td id=\"tdUnavailable\">X</td>");
-	} else if($schedule[$j] == "true"){
-	  echo "<td></td>";
-	} else if( $schedule[$j] == "Group" ){
-	  echo "<td>Group</td>";
-	} else {
-	  echo "<td>" . $schedule[$j] . "</td>";
-	}
-      }//end of for(each time)
-      echo "</table></div>";
+        $date = $week->dates[$i];    
+        $sql = "SELECT * FROM Individual_Schedule WHERE advisorID = '$advisorID'";
+        $sql.= "AND date = '$date'";
+        $record = $COMMON->executeQuery($sql, $_SERVER["ScheduleDisplay.php"]);
+        $schedule = mysql_fetch_row($record);
+        echo "<div id=\"scheduleDisplay\">";
+        echo "<div id=\"dateTitle\">".date_to_string($date)."</div>";
+        echo "<table id=\"tableDisplay\"><tr>";
+        foreach($apptTimes as $time){
+	       echo "<th>" . $time . "</th>";
+        }
+        echo "</tr>";
+        if(count($schedule) > 1){
+            for($j = 3; $j < count($schedule); $j++) {
+	           if($schedule[$j] == "Closed"){
+	               echo "<td id=\"tdUnavailable\">X</td>";
+	           } else if($schedule[$j] == NULL){
+	               echo "<td></td>";
+                } else {
+	               echo "<td>" . $schedule[$j] . "</td>";
+	           }
+            }
+        //if record doesnt exist, schedule is empty (set all to unavailable)
+        } else {
+            foreach($apptTimes as $time){
+                echo "<td id=\"tdUnavailable\">X</td>";
+            }
+        }
+        echo "</table></div>";
     }//end of for(each day)
     include 'includes/printButton.php';
   }//end of if(count($_POST)>1)

@@ -5,7 +5,14 @@ include_once 'includes/overallheader.php';
 if(array_key_exists('advisorID', $_SESSION)){
     include 'includes/widgets/logout.php';
     echo "<h2>Your Schedule</h2>";
-    echo "<br>Display schedule here";
+    ?>
+<form id="weekForm" action="index.php" method="post">
+<?php include 'includes/selectWeek.php'; ?>
+</form>
+<?php
+    if(array_key_exists('week', $_POST)){
+         display_week($_SESSION['advisorID'], (int)$_POST['week']);
+    }
 
 }
 else if(array_key_exists('advisor', $_POST)){
