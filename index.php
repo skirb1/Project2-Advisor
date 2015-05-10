@@ -3,7 +3,7 @@ include_once 'init.php';
 include_once 'includes/overallheader.php';
 
 if(array_key_exists('advisorID', $_SESSION)){
-    include 'includes/widgets/logout.php';
+    include 'includes/logout.php';
     echo "<h2>Your Schedule</h2>";
     ?>
 <form id="weekForm" action="index.php" method="post">

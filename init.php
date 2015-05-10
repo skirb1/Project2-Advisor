@@ -9,6 +9,7 @@ $COMMON = new Common($debug);
 //require 'users.php';
 require 'Calendar.php';
 require 'Advisor.php';
+require 'Groups.php';
 
 $CALENDAR = new Calendar();
 

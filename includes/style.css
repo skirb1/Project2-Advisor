@@ -1,3 +1,12 @@
+#indent {
+    padding-left: 25px;   
+}
+
+#tab {
+    padding-left: 12px;
+    display: inline;
+}
+
 #error, #printDiv{
     padding-top: 20px;
     padding-left: 20px;
@@ -150,12 +159,13 @@ ul li {
 }
 
 #tableDisplay{
-    width: 100%;
 }
 
 #tableDisplay td, th {
-    width: 140px;
-    height: 25px;
+    min-width: 60px;
+    height: 27px;
+    font-size: 90%;
+    padding-top: 5px;
 }
 
 #tableDetail {
@@ -180,6 +190,7 @@ td, th {
 }
 
 #tdUnavailable {
+    min-width: 60px;
     background-color:#989898;
     color: #989898;
 }

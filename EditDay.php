@@ -13,7 +13,8 @@ if(array_key_exists('advisorID', $_SESSION)){
     echo " style=\"padding-top:0px\">";
 
     foreach($_POST as $date ){
-      $sql = "SELECT * FROM " . $date ." WHERE advisorID = '$advisorID'";
+      $sql = "SELECT * FROM Individual_Schedule WHERE advisorID = '$advisorID'";
+        $sql .= "  AND date = '$date'";
       $record = $COMMON->executeQuery($sql, $_SERVER["EditSchedule.php"]);
 
       echo "<div id=\"editSchedule\">";
@@ -23,26 +24,67 @@ if(array_key_exists('advisorID', $_SESSION)){
         echo "<th>" . $time . "</th>";
       }
       echo "</tr>";
-      $schedule = mysql_fetch_row($record);
-      for($j = 2; $j < count($schedule); $j++) {
-	echo "<td><select name=\"".$date."-".$apptTimes[$j-2]."\">";
-	if($schedule[$j] == "false"){
-	    echo "<option value=\"true\">Individual</option>";
-	    echo "<option value=\"Group\">Group</option>";
-	    echo "<option value=\"false\" selected>None</option>";
-	} else if ( strpos($schedule[$j], "Group") !== false ) {
-	    echo "<option value=\"true\">Individual</option>";
-	    echo "<option value=\"Group\" selected>Group</option>";
-	    echo "<option value=\"false\">None</option>";
-	} else if ( $schedule[$j] == "true"){
-	    echo "<option value=\"true\" selected>Individual</option>";
-	    echo "<option value=\"Group\">Group</option>";
-	    echo "<option value=\"false\">None</option>";
-	} else {
-	  echo "<option value=\"".$schedule[$j];
-	  echo "\" selected>Individual</option>";
-	}
-	echo "</select></td>";
+      $schedule = mysql_fetch_assoc($record);
+      foreach($apptTimes as $time) {
+          $value = $schedule[db_time($time)];
+          echo "<td><select name=\"".$date."_".$time."\">";
+          
+          if($value != NULL && $value != "Group" && $value != "Closed" &&
+             $value != "CMPE" && $value != "CMSC" && $value != "ENME" &&
+             $value != "ENCH" && $value != "ENGR" && $value != "NULL" && 
+             $value != "Open" ) {
+           echo "<option value=\"".$value."\">Appt</option>";
+          }
+        else{
+          echo "<option value=\"Open\"";
+          if($value == "Open"){
+              echo " selected ";
+          }
+          echo ">Open</option>";
+          
+          echo "<option value=\"Group\"";
+          if($value == "Group") {
+              echo " selected ";
+          }
+          echo ">Group</option>";
+          
+          echo "<option value=\"Closed\"";
+          if($value == "Closed" || $value == "NULL" || $value == NULL) {
+              echo " selected ";
+          }
+          echo ">Closed</option>";
+          
+          echo "<option value=\"CMPE\"";
+          if($value == "CMPE") {
+              echo " selected ";
+          }
+          echo ">CMPE</option>";  
+          
+          echo "<option value=\"CMSC\"";
+          if($value == "CMSC") {
+              echo " selected ";
+          }
+          echo ">CMSC</option>"; 
+          
+          echo "<option value=\"ENME\"";
+          if($value == "ENME") {
+              echo " selected ";
+          }
+          echo ">ENME</option>";
+          
+          echo "<option value=\"ENCH\"";
+          if($value == "ENCH") {
+              echo " selected ";
+          }
+          echo ">ENCH</option>";
+          
+          echo "<option value=\"ENGR\"";
+          if($value == "ENGR") {
+              echo " selected ";
+          }
+          echo ">ENGR</option>";
+        }
+	       echo "</select></td>";
       }//end of foreach date
       echo "</table></div>";
     }
