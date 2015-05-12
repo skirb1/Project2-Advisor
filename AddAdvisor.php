@@ -5,12 +5,12 @@ include 'includes/overallheader.php';
 <h2>Add Advisor</h2>
 <?php
 
-    if(array_key_exists('submitAdvisor', $_POST) && 
-       array_key_exists('firstName', $_POST) &&
-       array_key_exists('lastName', $_POST) &&
-       array_key_exists('email', $_POST) &&
-       array_key_exists('room', $_POST) &&
-        array_key_exists('phone', $_POST) ){
+    if(array_key_exists('submitAdvisor', $_POST) &&
+       $_POST['firstName'] != NULL &&
+       $_POST['lastName'] != NULL &&
+       $_POST['email'] != NULL &&
+       $_POST['room'] != NULL &&
+       $_POST['phone'] != NULL ){
 
         if(strpos($_POST['email'], "@umbc.edu") !== false){
             $firstName = $_POST['firstName'];
@@ -32,20 +32,19 @@ include 'includes/overallheader.php';
             }
 
             if($advisorResult === true){
-                echo "Advisor added successfully<br>";
+                echo "<div id=\"error\">Advisor added successfully</div>";
             }
             else {
-                echo "Error, advisor not added<br>";
+                echo "<div id=\"error\"><img src=\"includes/error.png\" id=\"errorImg\">";
+                echo "Error: Advisor not added</div>";
             }
 
       }//end if(email valid)
       else {
-	       echo "<div id=\"error\">Email must contain '@umbc.edu'</div>";
+	       echo "<div id=\"error\"><img src=\"includes/error.png\" id=\"errorImg\">";
+            echo "Email must contain '@umbc.edu'</div>";
       }
-    }//end if(all fields are entered)
-    else if (array_key_exists('submitAdvisor', $_POST)){
-        echo "<div id=\"error\">Missing fields</div>";
-    }
+}//end if(all fields are entered)
 else{
 ?>
 <div id="list">
@@ -68,10 +67,18 @@ else{
         <td><input type="text" name="phone"></td>
     </tr><tr>
         <td></td><td><input type="submit" name="submitAdvisor"></td>
-    </tr>
-</table>
-</form></div>
 <?php
+    if (array_key_exists('submitAdvisor', $_POST)){
+        echo "<td><img src=\"includes/error.png\" id=\"errorImg\">";
+        echo "Please enter all fields</td>";
+    }
+    ?>
+</tr>
+</table>
+</form>
+<?php
+
+    echo "</div>";
 }
 include 'includes/overallfooter.php';
 ?>

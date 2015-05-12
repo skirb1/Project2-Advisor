@@ -12,6 +12,4 @@ require 'Advisor.php';
 require 'Groups.php';
 
 $CALENDAR = new Calendar();
-
-$errors = array();
 ?>

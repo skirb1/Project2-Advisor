@@ -1,14 +1,15 @@
 <?php
 include 'init.php';
 include 'includes/overallheader.php';
+
+if(array_key_exists('advisorID', $_SESSION)){
 ?>
 <h2>Print Detail</h2>
-<p1>
 <form id="weekForm" action="SelectDetail.php" method="post">
 <?php include 'includes/selectWeek.php'; ?>
 </form>
-<?php
-if(array_key_exists('advisorID', $_SESSION)){
+<?php  
+    
   if(array_key_exists('week', $_POST) === true ){
     echo "<form action=\"PrintDetail.php\" method=\"post\">";
     echo "<br><div id=\"selectTitle\">Select day:</div>";
@@ -31,8 +32,9 @@ if(array_key_exists('advisorID', $_SESSION)){
   }
 }
 else {
-  echo "<br><div id=\"error\">You are not logged in.</div>";
+    echo "<div id=\"error\">";
+    echo "<img src=\"includes/error.png\" id=\"errorImg\">";
+    echo "You are not logged in.</div>";
 }
 ?>
-</p1>
 <?php include 'includes/overallfooter.php'; ?>

@@ -14,7 +14,7 @@ if(array_key_exists('advisorID', $_SESSION)){
         $date = $_POST['date'];
         
         //if(mysql_num_rows(record) == 1){
-            echo "<form action=\"EditGroup.php\" method=\"post\">";
+            echo "<form name=\"EditGroup\" action=\"UpdateGroup.php\" method=\"post\">";
             echo "<div id=\"selectTitle\">".display_time($time)." on ";
             echo date_to_string($date)."</div>";
             echo "<div id = \"indent\">";
@@ -36,7 +36,7 @@ if(array_key_exists('advisorID', $_SESSION)){
             echo "<li><div id=\"selectTitle\">Majors:</div></li>";
             foreach($majors as $m){
                 if($m == NULL){
-                    echo "<li><input type=\"radio\" name=\"major\" value=\"".NULL."\"";
+                    echo "<li><input type=\"radio\" name=\"major\" value=\"NULL\"";
                     if ($major == NULL) { echo " checked "; }
                     echo ">All Majors</li>";
                 }
@@ -49,32 +49,38 @@ if(array_key_exists('advisorID', $_SESSION)){
             echo "</ul>";
 
         // get advisors and display checkboxes
-            $advisorArray = get_advisors($date, $time);
+            $advisorArray = get_group_advisors($date, $time);
             $sql = "SELECT * FROM Advisors";
-            $record = $COMMON->executeQuery($sql, $_SERVER["EditGroup.php"]);
+            $record = $COMMON->executeQuery($sql, $_SERVER["Advisor.php"]);
             echo "<ul id=\"radio\">";
-            echo "<li><div id=\"selectTitle\">Advisors:</div></li>";
-            for($i = 0; $i < mysql_num_rows($record); $i++){
+            echo "<li><div id=\"selectTitle\">Advisors (up to three):</div></li>";
+            for($i = 0; $i < count_advisors(); $i++){
                 $fname = mysql_result($record, $i, 'firstName');
                 $lname = mysql_result($record, $i, 'lastName');
                 $advisorID = mysql_result($record, $i, 'advisorID');
-                echo "<li><input type=\"checkbox\" name=\"advisor\" value=\"".$advisorID."\"";
+                echo "<li><input type=\"checkbox\" name=\"advisor".$i;
+                echo "\" value=\"".$advisorID."\"";
                 if( in_array( $advisorID, $advisorArray ) ){ echo " checked "; }
                 echo ">".$fname." ".$lname."</li>";
 
             }
-            echo "</ul>";        
-            echo "<div id=\"submit\"><input type=\"submit\" name=\"submitDay\">";
+            echo "</ul>";
+        //pass on date and time
+            echo "<input type=\"hidden\" name=\"date\" value=\"".$date."\">";
+            echo "<input type=\"hidden\" name=\"time\" value=\"".$time."\">";
+            echo "<div id=\"submit\"><input type=\"submit\" name=\"submitGroup\">";
             echo "</div></div></form>";
 
-        
         }
    // }
     else {
-     echo "<div id=\"error\">Missing Data</div>";   
+        echo "<div id=\"error\"><img src=\"includes/error.png\" id=\"errorImg\">";
+        echo "Please enter a time</div>";
+        /*back button*/
     }
 } else {
-    echo "You are not logged in";   
+    echo "<div id=\"error\"><img src=\"includes/error.png\" id=\"errorImg\">";
+    echo "You are not logged in<div>";   
 }
 include_once 'includes/overallfooter.php';
 ?>

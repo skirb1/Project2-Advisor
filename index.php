@@ -3,7 +3,7 @@ include_once 'init.php';
 include_once 'includes/overallheader.php';
 
 if(array_key_exists('advisorID', $_SESSION)){
-    include 'includes/logout.php';
+    //include 'includes/logout.php';
     echo "<h2>Your Schedule</h2>";
     ?>
 <form id="weekForm" action="index.php" method="post">
@@ -13,7 +13,6 @@ if(array_key_exists('advisorID', $_SESSION)){
     if(array_key_exists('week', $_POST)){
          display_week($_SESSION['advisorID'], (int)$_POST['week']);
     }
-
 }
 else if(array_key_exists('advisor', $_POST)){
     if($_POST['advisor'] == 'add'){
@@ -29,6 +28,5 @@ else if(array_key_exists('advisor', $_POST)){
 else {
     include 'SelectAdvisorForm.php';
 }
-
 include_once 'includes/overallfooter.php';
 ?>

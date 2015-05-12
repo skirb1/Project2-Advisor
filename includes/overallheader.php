@@ -13,8 +13,10 @@
     <?php
     if(array_key_exists('advisorID', $_SESSION)){
         include 'includes/advisorMenu.php';
+        echo "</ul>";
+        include 'includes/logout.php';
     }
     ?>
-</ul></nav>
+</nav>
 </header>
 <div id="center">

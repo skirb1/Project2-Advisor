@@ -21,4 +21,4 @@
    }
 ?>
 </select>
-<input type="submit" name="Select Week">
+<input type="submit" name="submitWeek">

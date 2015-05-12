@@ -40,7 +40,7 @@ if(array_key_exists('advisorID', $_SESSION)){
                   $studentID = $element;
                   $sql = "SELECT * FROM Students WHERE studentID = '$studentID'";
                   $record = $COMMON->executeQuery($sql, $_SERVER["PrintDetail.php"]);
-                  if($record !== false){
+                  if(mysql_num_rows($record) == 1){
                     echo "<td>".mysql_result($record, 0, 'firstName')." ";
                     echo mysql_result($record, 0, 'lastName')."</td>";
                     echo "<td>".mysql_result($record, 0, 'major')."</td>";
@@ -81,7 +81,7 @@ if(array_key_exists('advisorID', $_SESSION)){
            echo "Advisors: ";
            
            $advisorCount = 0;
-           for( $i = 1; $i <= 4; $i++){
+           for( $i = 1; $i <= 3; $i++){
                $key = "advisor".$i;
                if($recordAssoc[$key] != NULL){
                    if($advisorCount > 0){ echo ", "; }
@@ -132,59 +132,70 @@ if(array_key_exists('advisorID', $_SESSION)){
         echo date_to_string($date)."</div>";
         echo "<div id=\"selectGroup\">";
         echo "<form action=\"PrintDetail.php\" method=\"post\">";
-        echo "<div id=\"list\"><ul>";
         $timecount = 0;
         
-        $sql = "SELECT * FROM Group_Schedule WHERE date = '$date'";
-        $record = $COMMON->executeQuery($sql, $_SERVER["PrintDetail.php"]);
-        
-        for($i = 0; $i < mysql_num_rows($record); $i++){
-            $db_time = mysql_result($record, $i, 'time');
-            if(!is_group_null($date, $db_time)){
-                $time = short_time($db_time);
-                echo "<li>";
-                echo "<input type=\"radio\" name=\"time\" value=\"".$time."\">";
-                echo display_time($time)."<div id=\"tab\">Advisors: ";
-                echo count_advisors($date, $time);
-                echo "<div id=\"tab\">Students: ".count_students($date, $time)."</li>";
-                $timecount += 1;
+        echo "<table id=\"selectGroupTable\">";
+        foreach($apptTimes as $t){
+            $time = db_time($t);
+            $sql = "SELECT * FROM Group_Schedule WHERE date = '$date' and time='$time'";
+            $record = $COMMON->executeQuery($sql, $_SERVER["SelectGroup.php"]);
+            if(mysql_num_rows($record) == 1){
+                if(!is_group_null($date, $time)){
+                    $time = short_time($time);
+                    echo "<tr><td><b>";
+                    echo "<input type=\"radio\" name=\"time\" value=\"".$time."\">";
+                    echo display_time($time)."</b></td><td>Advisors: ";
+                    echo count_group_advisors($date, $time);
+                    echo "</td><td>Students: ".count_students($date, $time)."</td><td>";
+                    echo "Limit: ".get_size($date, $time)."</td></tr>";
+                    $timecount += 1;
+                }
             }
         }
-
-        echo "</ul></div>";
+        
+        echo "</table></div>";
         echo "<input type=\"hidden\" name=\"date\" value=\"".$date."\">";
         echo "<input type=\"hidden\" name=\"apptType\" value=\"".$apptType."\">";
 
-	  if($timecount == 0){
-	    echo "<div id=\"error\">";
-	    echo "There are no group advising times for this day.";
-	    echo "<br><br><a href=\"SelectDetail.php\">Select another day";
-	    echo "</a></div>";
-	  } else {
-	    echo "<input type=\"submit\" name=\"submitTime\">";
+	   if($timecount == 0){
+            echo "<div id=\"error\">";
+           echo "<img src=\"includes/error.png\" id=\"errorImg\">";
+            echo "There are no group advising times for this day.</div>";
+            echo "<div id=\"error\"><a href=\"SelectDetail.php\">Select another day";
+            echo "</a></div>";
+	   }
+        else {
+	       echo "<div id=\"submit\"><input type=\"submit\" name=\"submitTime\"></div>";
+	       if(array_key_exists('submitTime', $_POST) === true){
+	           echo "<div id=\"error\">";
+                echo "<img src=\"includes/error.png\" id=\"errorImg\">";
+               echo "Please select a group time to view";
+	           echo "</div>";
+	       }
+	   }
+	   echo "</form>";
+	   }
+    }//end of if(Group)
 
-	    if(array_key_exists('submitTime', $_POST) === true){
-	      echo "<div id=\"error\">You must select a group time to view";
-	      echo "</div>";
-	    }
-	  }
-	  echo "</form></div>";
-	}
-      }//end of if(Group)
-
-    } //end if(data is entered)
+  } //end if(data is entered)
   else {
     if(array_key_exists('date', $_POST) === false ){
-      echo "<br>You must select a day.";
+        echo "<div id=\"error\">";
+        echo "<img src=\"includes/error.png\" id=\"errorImg\">";
+        echo "Please select a day</div>";
     }
     if(array_key_exists('apptType', $_POST) === false ){
-      echo "<br>You must select a schedule type.";
+        echo "<div id=\"error\">";
+        echo "<img src=\"includes/error.png\" id=\"errorImg\">";
+        echo "Please select a schedule type</div>";
     }
-    echo "<br><br><a href=\"SelectDetail.php\" >Back</a>";
+    echo "<div id=\"error\"><a href=\"SelectDetail.php\" >Back</a></div>";
   }
 } //end if(advisorID exists)
 else {
-  echo "<br><div id=\"error\">You are not logged in.</div>";
+    echo "<div id=\"error\">";
+    echo "<img src=\"includes/error.png\" id=\"errorImg\">";
+    echo "You are not logged in.</div>";
 }
 include 'includes/overallfooter.php'
 ?>

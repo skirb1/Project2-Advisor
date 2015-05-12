@@ -29,39 +29,7 @@ class Calendar {
       $this->weeks[] = new Week(4, 27, 15);
 
   }
-
-/*  function add_week($month, $day, $year){
-    $newWeek = true;
-    $date = $month."_".$day."_".$year;
-    foreach($this->weeks as $week){
-      if($week->dates[0] == $date){
-	echo "<div id=\"error\">This week is already in your calendar</div>";
-	$newWeek = false;
-      }
-    }
-    if($newWeek){
-      $this->weeks[] = new Week($month, $day, $year);
-    }
-  }
-
-  function remove_week($monday){
-    for($i = 0; $i < count($this->weeks); $i++) {
-      $week = $this->weeks[$i];
-      if($week->dates[0] == $monday ){
-	$week->remove_tables();
-	array_splice($this->weeks, $i, 1, NULL);
-	foreach($this->weeks as $week){
-	  echo "New CalWeeks Array: <br>".array_search($week, $this->weeks);
-	  echo " ".$week."<br>" ;
-	}
-	echo " true ";
-
-      }
-      else echo " false ";
-    }
-  }*/
-
-}//end of Calendar class
+}
 
 function short_string($date) {
   $dateArray = explode( "-", $date, 3);
@@ -90,13 +58,8 @@ function day_of_week($date){
 }
 
 function db_time($time){
-   // if(strpos($time, " am")){
-       chop($time, " am");
-   // }
-    
-   // if(strpos($time, " pm")){
-        chop($time, " pm");   
-   // }
+    chop($time, " am");
+    chop($time, " pm");   
     
     if(strlen($time) <= 5){
         $time = $time.":00";
@@ -110,7 +73,7 @@ function db_time($time){
 function display_time($time){
     $time = date('h:i', strtotime($time));
     $value = intval(substr($time, 0, 2));
-    if( $value >= 9 && $value <= 11 ){
+    if( $value >= 8 && $value <= 11 ){
         $time .= " am";
     }
     else if( ($value >= 1 && $value <= 4 ) || $value == 12){

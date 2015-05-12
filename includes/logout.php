@@ -1,6 +1,5 @@
 <aside>
-<div class="widget">
-<p>Logged in as 
+<p>Logged in as
 <?php
    if(array_key_exists('advisorID', $_SESSION)){
      echo name_from_advisorID($_SESSION['advisorID']);
@@ -10,5 +9,4 @@
   <div class="inner">
   <input type="button" value="Log Out" onclick="parent.location='logout.php'">
   </div>
-</div>
 </aside>
