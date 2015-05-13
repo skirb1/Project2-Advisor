@@ -12,7 +12,6 @@ if(array_key_exists('advisorID', $_SESSION)){
     echo "<form action=\"UpdateSchedule.php\" method=\"post\">";
 
     foreach($_POST['date'] as $date ){
-        
         //set all closed appts to open if checked for the date
         if(array_key_exists('SetOpen', $_POST)){
             if( in_array($date, $_POST['SetOpen']) ){

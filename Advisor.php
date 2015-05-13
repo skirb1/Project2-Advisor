@@ -101,7 +101,7 @@ function set_group_appts($advisorID, $date){
         $recordAssoc = mysql_fetch_assoc($record);
         foreach($groupTimes as $time){
             $time = db_time($time);
-            if(is_studentID($recordAssoc['time'] == false)){
+            if(is_studentID($recordAssoc['time']) == false){
                 $sql = "UPDATE Individual_Schedule SET `".$time."`=\"Group\" WHERE ";
                 $sql .= " advisorID='$advisorID' AND date='$date'";
                 $result = $COMMON->executeQuery($sql, $_SERVER["Advisor.php"]);

@@ -7,7 +7,7 @@ function is_studentID($element){
     $result = false;
     if(strlen($element) == 7 && ctype_digit(substr($element, 2, 5))
        && ctype_alpha(substr($element, 0, 2)) ) {
-        $result = true;   
+        $result = true;
     }
     return $result;
 }
