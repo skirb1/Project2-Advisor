@@ -79,7 +79,6 @@ if(array_key_exists('advisorID', $_SESSION)){
 	       echo date_to_string($date)." - ".display_time($time)."</div>";
            
            echo "Advisors: ";
-           
            $advisorCount = 0;
            for( $i = 1; $i <= 3; $i++){
                $key = "advisor".$i;
@@ -192,10 +191,12 @@ if(array_key_exists('advisorID', $_SESSION)){
     echo "<div id=\"error\"><a href=\"SelectDetail.php\" >Back</a></div>";
   }
 } //end if(advisorID exists)
-else {
+else 
+{
     echo "<div id=\"error\">";
     echo "<img src=\"includes/error.png\" id=\"errorImg\">";
     echo "You are not logged in.</div>";
+    echo "<div id=\"error\"><a href=\"index.php\" >Back</a></div>";
 }
 include 'includes/overallfooter.php'
 ?>

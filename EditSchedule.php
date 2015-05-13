@@ -19,23 +19,35 @@ if(array_key_exists('advisorID', $_SESSION)){
 </form>
 <?php
   if(count($_POST) > 1){
+       $openAllowed = true;
     echo "<form action=\"EditDay.php\" method=\"post\">";
     echo "<br><div id=\"selectTitle\">Select a day to edit:</div>";
     $week = $CALENDAR->weeks[(int)$_POST['week']];
     echo "<div id=\"selectGroup\"><table id=\"selectGroupTable\">";
     for($i = 0; $i < 5; $i++){
       $date = $week->dates[$i];
-      echo "<tr><td><input type=\"checkbox\" name=\"date[]\" value=\"".$date."\">";
-      echo date_to_string($date)."</td>";
-        echo "<td><input type=\"checkbox\" name=\"SetOpen[]\" value=\"".$date."\">";
-        echo "Open Appts</td>";
+        echo "<tr><td><input type=\"checkbox\" name=\"date[]\" value=\"".$date."\">";
+        echo date_to_string($date)."</td>";
+        
+        
+        //only allow set open if dates are after 3/23
+        if(substr($date, 6, 1) == "3" && substr($date, 8, 2) < "23"){
+            $openAllowed = false;
+        }
+        if($openAllowed){
+            echo "<td><input type=\"checkbox\" name=\"SetOpen[]\" value=\"".$date."\">";
+            echo "Open Appts</td>";
+        }
+        
         echo "<td><input type=\"checkbox\" name=\"SetGroups[]\" value=\"".$date."\">";
         echo "Set Groups</td>";
       echo "</tr>";
     }
 ?>
 <tr><td><input type="checkbox" onClick="toggle(this, 'date[]')" />Select All</td>
+    <?php if($openAllowed){ ?>
     <td><input type="checkbox" onClick="toggle(this, 'SetOpen[]')" />Open All Appts</td>
+    <?php } ?>
     <td><input type="checkbox" onClick="toggle(this, 'SetGroups[]')" />Set All Groups</td></tr>
 <?php
     echo "</table></div>";

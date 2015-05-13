@@ -47,39 +47,45 @@ function open_appts($advisorID, $date){
     global $COMMON;
     global $apptTimes;
     
-    $sql = "SELECT * FROM Individual_Schedule WHERE advisorID='$advisorID' AND date='$date'";
-    $record = $COMMON->executeQuery($sql, $_SERVER["Advisor.php"]);
-    if(mysql_num_rows($record) == 1){
-        $recordAssoc = mysql_fetch_assoc($record);
-        foreach($apptTimes as $time){
-            $time = db_time($time);
-            if($recordAssoc[$time] == "Closed" || $recordAssoc[$time] == NULL ){
-                $sql = "UPDATE Individual_Schedule SET `".$time."`=\"Open\" WHERE ";
-                $sql .= " advisorID='$advisorID' AND date='$date'";
-                $result = $COMMON->executeQuery($sql, $_SERVER["Advisor.php"]);
-                if($result == false){
-                    return false;
+    
+    if(substr($date, 6, 1) == "3" && substr($date, 8, 2) < "23"){
+        return true;   
+    }
+    else {
+        $sql = "SELECT * FROM Individual_Schedule WHERE advisorID='$advisorID' AND date='$date'";
+        $record = $COMMON->executeQuery($sql, $_SERVER["Advisor.php"]);
+        if(mysql_num_rows($record) == 1){
+            $recordAssoc = mysql_fetch_assoc($record);
+            foreach($apptTimes as $time){
+                $time = db_time($time);
+                if($recordAssoc[$time] == "Closed" || $recordAssoc[$time] == NULL ){
+                    $sql = "UPDATE Individual_Schedule SET `".$time."`=\"Open\" WHERE ";
+                    $sql .= " advisorID='$advisorID' AND date='$date'";
+                    $result = $COMMON->executeQuery($sql, $_SERVER["Advisor.php"]);
+                    if($result == false){
+                        return false;
+                    }
                 }
             }
         }
-    }
-    else if(mysql_num_rows($record) == 0){
-        $sql = "INSERT INTO Individual_Schedule ( `advisorID`, `date` ";
-        foreach($apptTimes as $time){
-            $sql .= ", `".db_time($time)."`";
+        else if(mysql_num_rows($record) == 0){
+            $sql = "INSERT INTO Individual_Schedule ( `advisorID`, `date` ";
+            foreach($apptTimes as $time){
+                $sql .= ", `".db_time($time)."`";
+            }
+            $sql .= " ) VALUES ( '$advisorID', '$date'";
+            foreach($apptTimes as $time){
+                $sql .= ", 'Open'";
+            }       
+            $sql .= ");";
+            $result = $COMMON->executeQuery($sql, $_SERVER["Advisor.php"]);
+            if($result == false){
+                return false;
+            }
         }
-        $sql .= " ) VALUES ( '$advisorID', '$date'";
-        foreach($apptTimes as $time){
-            $sql .= ", 'Open'";
-        }       
-        $sql .= ");";
-        $result = $COMMON->executeQuery($sql, $_SERVER["Advisor.php"]);
-        if($result == false){
-            return false;
+        else {
+            return false;       
         }
-    }
-    else {
-        return false;       
     }
     return true;
 }
@@ -95,7 +101,7 @@ function set_group_appts($advisorID, $date){
         $recordAssoc = mysql_fetch_assoc($record);
         foreach($groupTimes as $time){
             $time = db_time($time);
-            if($recordAssoc[$time] == "Open" || $recordAssoc[$time] == NULL ){
+            if(is_studentID($recordAssoc['time'] == false)){
                 $sql = "UPDATE Individual_Schedule SET `".$time."`=\"Group\" WHERE ";
                 $sql .= " advisorID='$advisorID' AND date='$date'";
                 $result = $COMMON->executeQuery($sql, $_SERVER["Advisor.php"]);
@@ -110,8 +116,20 @@ function set_group_appts($advisorID, $date){
             }
         }
     }
-    else{
-        return false;
+    else if (mysql_num_rows($record) == 0){
+        $sql = "INSERT INTO Individual_Schedule ( `advisorID`, `date` ";
+        foreach($groupTimes as $time){
+            $sql .= ", `".db_time($time)."`";
+        }
+        $sql .= " ) VALUES ( '$advisorID', '$date'";
+        foreach($groupTimes as $time){
+            $sql .= ", 'Group'";
+        }       
+        $sql .= ");";
+        $result = $COMMON->executeQuery($sql, $_SERVER["Advisor.php"]);
+        if($result == false){
+            return false;
+        }
     }
     return true;
 }

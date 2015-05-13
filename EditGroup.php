@@ -76,11 +76,13 @@ if(array_key_exists('advisorID', $_SESSION)){
     else {
         echo "<div id=\"error\"><img src=\"includes/error.png\" id=\"errorImg\">";
         echo "Please enter a time</div>";
+        echo "<div id=\"error\"><a href=\"SelectGroup.php\" >Selection</a></div>";
         /*back button*/
     }
 } else {
     echo "<div id=\"error\"><img src=\"includes/error.png\" id=\"errorImg\">";
-    echo "You are not logged in<div>";   
+    echo "You are not logged in<div>";
+    
 }
 include_once 'includes/overallfooter.php';
 ?>

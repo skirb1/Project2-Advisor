@@ -52,19 +52,19 @@ else{
 <table id="advisorFormTable">
     <tr>
         <td>First Name:</td>
-        <td><input type="text" name="firstName"></td>
+        <td><input type="text" name="firstName" minlength ="2" maxlength="15"></td>
     </tr><tr>
         <td>Last Name:</td>
-        <td><input type="text" name="lastName"></td>
+        <td><input type="text" name="lastName" minlength="2" maxlength="15"></td>
     </tr><tr>
         <td>UMBC Email Address:</td>
-        <td><input type="text" name="email"></td>
+        <td><input type="text" name="email" ></td>
     </tr><tr>
         <td>Room Number:</td>
-        <td><input type="int" name="room"></td>    
+        <td><input type="int" name="room" minlength="3" maxlength="4"></td>    
     </tr><tr>
         <td>Phone Number:</td>
-        <td><input type="text" name="phone"></td>
+        <td><input type="text" name="phone" min="0" max="9" maxlength="10"></td>
     </tr><tr>
         <td></td><td><input type="submit" name="submitAdvisor"></td>
 <?php

@@ -116,7 +116,8 @@ if(array_key_exists('advisorID', $_SESSION)){
     }
     else {
         echo "<div id=\"error\"><img src=\"includes/error.png\" id=\"errorImg\">";
-        echo "Please enter both size and major.</div>";   
+        echo "Please enter both size and major.</div>";
+        echo "<div id=\"error\"><a href=\"EditGroup.php\" >Back</a></div>";
         //back button
     }
 } 

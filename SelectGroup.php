@@ -52,7 +52,7 @@ if(!array_key_exists('date', $_POST)){
                 if(!is_group_null($date, $time)){
                     $time = short_time($time);
                     echo "<tr><td><b>";
-                    echo "<input type=\"radio\" name=\"time\" value=\"".$time."\">";
+                    echo "<input type=\"radio\" name=\"time\" value=\"".$time."\" required>";
                     echo display_time($time)."</b></td><td>Advisors: ";
                     echo count_group_advisors($date, $time);
                     echo "</td><td>Students: ".count_students($date, $time)."</td><td>";
@@ -77,6 +77,7 @@ else {
     echo "<div id=\"error\">";
     echo "<img src=\"includes/error.png\" id=\"errorImg\">";
     echo "You are not logged in.</div>";
+    echo "<div id=\"error\"><a href=\"SelectGroup.php\" >Back</a></div>";
 }
 include_once 'includes/overallfooter.php';
 ?>
